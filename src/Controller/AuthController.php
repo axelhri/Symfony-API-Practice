@@ -22,7 +22,7 @@ class AuthController extends AbstractController {
         $user->setEmail($data['email'] ?? '');
         $user->setPassword($data['password'] ?? '');
 
-        $this->authService->register($user);
-        return new Response('', Response::HTTP_CREATED);
+        $token = $this->authService->register($user);
+        return new JsonResponse(['token' => $token], Response::HTTP_CREATED);
     }
 }
