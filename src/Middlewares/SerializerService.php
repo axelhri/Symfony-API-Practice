@@ -10,4 +10,8 @@ class SerializerService
     public function deserialize(string $class, mixed $data): mixed {
         return $this->serializer->deserialize($data, $class, 'json');
     }
+
+    public function serialize(mixed $data): mixed {
+        return $this->serializer->serialize($data, 'json');
+    }
 }
