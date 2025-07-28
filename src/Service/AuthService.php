@@ -6,6 +6,7 @@ use App\Interface\AuthServiceInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class AuthService implements AuthServiceInterface {
 
@@ -18,6 +19,17 @@ class AuthService implements AuthServiceInterface {
     public function register(User $user):string  {
         $user->setPassword($this->passwordHasher->hashPassword($user, $user->getPassword()));
         $this->userRepository->save($user);
+        return $this->JWTTokenManager->create($user);
+    }
+
+    #[\Override]
+    public function login(string $username, string $password):string {
+        $user = $this->userRepository->loadUserByIdentifier($username);
+
+        if (!$user || !$this->passwordHasher->isPasswordValid($user, $password)) {
+            throw new BadCredentialsException('Invalid username or password');
+        }
+
         return $this->JWTTokenManager->create($user);
     }
 }
