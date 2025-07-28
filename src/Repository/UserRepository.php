@@ -13,6 +13,11 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
 {
 
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, User::class);
+    }
+
     public function save(User $user): void {
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
@@ -25,10 +30,6 @@ class UserRepository extends ServiceEntityRepository implements UserLoaderInterf
             ->setParameter('email', $identifier)
             ->getQuery()
             ->getOneOrNullResult();
-    }
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, User::class);
     }
 
     //    /**
