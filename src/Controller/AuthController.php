@@ -37,4 +37,12 @@ class AuthController extends AbstractController {
         $response->headers->setCookie($cookie);
         return $response;
     }
+
+    #[Route('/api/v1/auth/logout', name: 'auth_logout', methods: ['POST'])]
+    public function logout():Response {
+    $cookie = $this->cookieService->deleteCookie();
+    $response = new JsonResponse(['message' => 'Déconnexion réussie']);
+    $response->headers->setCookie($cookie);
+    return $response;
+    }
 }

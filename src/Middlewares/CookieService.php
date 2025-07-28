@@ -14,7 +14,7 @@ class CookieService
             ->withPath('/');
     }
 
-    public function deleteCookie(string $token) {
+    public function deleteCookie() {
         return Cookie::create('access_token')
             ->withValue('')
             ->withHttpOnly(true)
