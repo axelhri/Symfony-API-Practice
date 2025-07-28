@@ -13,6 +13,11 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
 {
 
+    public function save(User $user): void {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
     public function loadUserByIdentifier(string $identifier): ?User
     {
         return $this->createQueryBuilder('u')

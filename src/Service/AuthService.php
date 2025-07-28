@@ -2,21 +2,21 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class AuthService {
 
-    public function __construct(private EntityManagerInterface $entityManager,
+    public function __construct(private UserRepository $userRepository,
                                 private UserPasswordHasherInterface $passwordHasher,
                                 private JWTTokenManagerInterface $JWTTokenManager,
     ) {}
 
     public function register(User $user):string  {
         $user->setPassword($this->passwordHasher->hashPassword($user, $user->getPassword()));
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->save($user);
         return $this->JWTTokenManager->create($user);
     }
 }
