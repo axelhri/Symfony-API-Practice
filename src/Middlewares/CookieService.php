@@ -14,4 +14,12 @@ class CookieService
             ->withPath('/');
     }
 
+    public function deleteCookie(string $token) {
+        return Cookie::create('access_token')
+            ->withValue('')
+            ->withHttpOnly(true)
+            ->withSecure(false)
+            ->withPath('/');
+    }
+
 }
