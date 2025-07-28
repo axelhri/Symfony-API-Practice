@@ -6,5 +6,5 @@ use App\Entity\User;
 
 interface AuthServiceInterface {
     public function register(User $user):string;
-    public function login(string $username, string $password):string;
+    public function login(string $email, string $password):string;
 }

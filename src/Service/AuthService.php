@@ -23,8 +23,8 @@ class AuthService implements AuthServiceInterface {
     }
 
     #[\Override]
-    public function login(string $username, string $password):string {
-        $user = $this->userRepository->loadUserByIdentifier($username);
+    public function login(string $email, string $password):string {
+        $user = $this->userRepository->loadUserByIdentifier($email);
 
         if (!$user || !$this->passwordHasher->isPasswordValid($user, $password)) {
             throw new BadCredentialsException('Invalid username or password');
