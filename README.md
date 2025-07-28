@@ -27,3 +27,7 @@ composer require lexik/jwt-authentication-bundle
 ```bash
 composer require nelmio/cors-bundle
 ```
+
+```bash
+composer require symfony/serializer
+```
