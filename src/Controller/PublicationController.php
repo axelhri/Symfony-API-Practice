@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Uid\Uuid;
 
 class PublicationController extends AbstractController {
 
@@ -24,5 +25,13 @@ public function __construct(private SerializerService $serializerService, privat
     $user = $this->security->getUser();
     $this->publicationServiceInterface->createPublication($publication, $user);
     return new JsonResponse(["message" => "Publication created!" , Response::HTTP_CREATED]);
+    }
+
+    #[Route('/api/v1/publication/{id}', name: 'get_publication', methods: ['GET'])]
+    public function getPublication(string $id): Response {
+        $uuid = Uuid::fromString($id);
+        $publication = $this->publicationServiceInterface->getPublication($uuid);
+        $json = $this->serializerService->serialize($publication);
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 }
