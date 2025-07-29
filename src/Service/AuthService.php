@@ -33,7 +33,7 @@ class AuthService implements AuthServiceInterface {
 
         $foundUser = $this->userRepository->loadUserByIdentifier($user->getEmail());
 
-        if (!$this->passwordHasher->isPasswordValid($foundUser, $user->getPassword())) {
+        if (!$foundUser || !$this->passwordHasher->isPasswordValid($foundUser, $user->getPassword())) {
             throw new BadCredentialsException('Invalid username or password');
         }
 

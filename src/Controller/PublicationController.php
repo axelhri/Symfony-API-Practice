@@ -24,15 +24,4 @@ public function __construct(private SerializerService $serializerService, privat
     $this->publicationServiceInterface->createPublication($publication, $user);
     return new JsonResponse(["message" => "Publication created!" , Response::HTTP_CREATED]);
     }
-
-    #[Route('/api/v1/protected', methods: ['GET'])]
-    public function testToken(Security $security): JsonResponse {
-        $user = $security->getUser();
-        if (!$user) {
-            return new JsonResponse(['error' => 'No user'], 401);
-        }
-
-        return new JsonResponse(['user' => $user->getUserIdentifier()]);
-    }
-
 }
