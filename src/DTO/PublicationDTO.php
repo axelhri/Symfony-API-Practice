@@ -9,7 +9,7 @@ class PublicationDTO {
     private ?Uuid $id;
     private ?string $text;
     private ?bool $pin;
-    private ?User $author;
+    private ?User $author = null;
 
     public function getId(): ?Uuid
     {
