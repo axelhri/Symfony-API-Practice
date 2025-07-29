@@ -16,6 +16,11 @@ class PublicationRepository extends ServiceEntityRepository
         parent::__construct($registry, Publication::class);
     }
 
+    public function save(Publication $publication): void {
+        $this->getEntityManager()->persist($publication);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return Publication[] Returns an array of Publication objects
     //     */
