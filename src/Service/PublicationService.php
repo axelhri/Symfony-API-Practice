@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Interface\PublicationServiceInterface;
 use App\Mapper\PublicationMapper;
 use App\Repository\PublicationRepository;
+use Symfony\Component\Uid\Uuid;
 
 class PublicationService implements PublicationServiceInterface {
 
@@ -20,5 +21,11 @@ class PublicationService implements PublicationServiceInterface {
         $publication->setAuthor($user);
         $this->publicationRepository->save($publication);
         return $publication;
+    }
+
+    #[\Override]
+    public function getPublication(Uuid $publicationId): PublicationDTO {
+        $publication = $this->publicationRepository->find($publicationId);
+        return $this->publicationMapper->publicationToDTO($publication);
     }
 }
