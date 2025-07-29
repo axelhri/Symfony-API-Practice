@@ -2,8 +2,7 @@
 namespace App\Controller;
 
 use App\DTO\LoginDTO;
-use App\DTO\UserDTO;
-use App\Entity\User;
+use App\DTO\RegisterDTO;
 use App\Interface\AuthServiceInterface;
 use App\Middlewares\CookieService;
 use App\Middlewares\SerializerService;
@@ -21,7 +20,7 @@ class AuthController extends AbstractController {
 
     #[Route('/api/v1/auth/register', name: 'api_auth_register', methods: ['POST'])]
     public function register(Request $request):Response {
-        $user = $this->serializerService->deserialize(UserDTO::class, $request->getContent());
+        $user = $this->serializerService->deserialize(RegisterDTO::class, $request->getContent());
         $token = $this->authServiceInterface->register($user);
         $cookie = $this->cookieService->generateCookie($token);
         $response = new JsonResponse(['message' => 'Utilisateur crée avec succès'], Response::HTTP_CREATED);
@@ -32,7 +31,7 @@ class AuthController extends AbstractController {
     #[Route('/api/v1/auth/login', name: 'auth_login', methods: ['POST'])]
     public function login(Request $request):Response {
         $user = $this->serializerService->deserialize(LoginDTO::class, $request->getContent());
-        $token = $this->authServiceInterface->login($user->getEmail(), $user->getPassword());
+        $token = $this->authServiceInterface->login($user);
         $cookie = $this->cookieService->generateCookie($token);
         $response = new JsonResponse(['message' => 'Utilisateur connecté'], Response::HTTP_CREATED);
         $response->headers->setCookie($cookie);

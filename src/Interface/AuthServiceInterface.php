@@ -2,10 +2,10 @@
 
 namespace App\Interface;
 
-use App\DTO\UserDTO;
-use App\Entity\User;
+use App\DTO\LoginDTO;
+use App\DTO\RegisterDTO;
 
 interface AuthServiceInterface {
-    public function register(UserDTO $userDTO):string;
-    public function login(string $email, string $password):string;
+    public function register(RegisterDTO $registerDTO):string;
+    public function login(LoginDTO $loginDTO):string;
 }

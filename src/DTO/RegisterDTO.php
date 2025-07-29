@@ -4,28 +4,30 @@ namespace App\DTO;
 
 use Symfony\Component\Uid\Uuid;
 
-class UserDTO {
-    public $id;
-    public $username;
-    public $email;
-    public $password;
+class RegisterDTO {
+    private Uuid $id;
+    private string $username;
+    private string $email;
+    private string $password;
 
     public function getId(): ?Uuid
     {
         return $this->id;
     }
 
+    public function setId(?Uuid $id): void
+    {
+        $this->id = $id;
+    }
 
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): static
+    public function setUsername(?string $username): void
     {
         $this->username = $username;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -33,11 +35,9 @@ class UserDTO {
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
     public function getPassword(): ?string
@@ -45,11 +45,8 @@ class UserDTO {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
-
-        return $this;
     }
-
 }
