@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\DTO\LoginDTO;
+use App\DTO\UserDTO;
 use App\Entity\User;
 use App\Interface\AuthServiceInterface;
 use App\Middlewares\CookieService;
@@ -20,7 +21,7 @@ class AuthController extends AbstractController {
 
     #[Route('/api/v1/auth/register', name: 'api_auth_register', methods: ['POST'])]
     public function register(Request $request):Response {
-        $user = $this->serializerService->deserialize(User::class, $request->getContent());
+        $user = $this->serializerService->deserialize(UserDTO::class, $request->getContent());
         $token = $this->authServiceInterface->register($user);
         $cookie = $this->cookieService->generateCookie($token);
         $response = new JsonResponse(['message' => 'Utilisateur crée avec succès'], Response::HTTP_CREATED);
