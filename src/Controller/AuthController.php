@@ -33,10 +33,11 @@ class AuthController extends AbstractController {
         $user = $this->serializerService->deserialize(LoginDTO::class, $request->getContent());
         $token = $this->authServiceInterface->login($user);
         $cookie = $this->cookieService->generateCookie($token);
-        $response = new JsonResponse(['message' => 'Utilisateur connecté'], Response::HTTP_CREATED);
+        $response = new JsonResponse(['message' => $token], Response::HTTP_CREATED);
         $response->headers->setCookie($cookie);
         return $response;
     }
+
 
     #[Route('/api/v1/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout():Response {

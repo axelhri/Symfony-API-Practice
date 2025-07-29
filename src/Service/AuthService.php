@@ -37,6 +37,6 @@ class AuthService implements AuthServiceInterface {
             throw new BadCredentialsException('Invalid username or password');
         }
 
-        return $this->JWTTokenManager->create($user);
+        return $this->JWTTokenManager->create($foundUser);
     }
 }

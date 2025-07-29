@@ -22,6 +22,9 @@ class Publication
     #[ORM\Column(type: 'boolean')]
     private ?bool $pin = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'publications')]
+    private ?User $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,5 +52,15 @@ class Publication
         $this->pin = $pin;
 
         return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): void
+    {
+        $this->author = $author;
     }
 }
