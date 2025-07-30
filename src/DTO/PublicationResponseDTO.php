@@ -2,14 +2,12 @@
 
 namespace App\DTO;
 
-use App\Entity\User;
 use Symfony\Component\Uid\Uuid;
 
-class PublicationDTO {
+class PublicationResponseDTO {
     private ?Uuid $id;
     private ?string $text;
     private ?bool $pin;
-    private ?User $author = null;
 
     public function getId(): ?Uuid
     {
@@ -39,15 +37,5 @@ class PublicationDTO {
     public function setPin(?bool $pin): void
     {
         $this->pin = $pin;
-    }
-
-    public function getAuthor(): ?User
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?User $author): void
-    {
-        $this->author = $author;
     }
 }

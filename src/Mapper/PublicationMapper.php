@@ -2,12 +2,13 @@
 
 namespace App\Mapper;
 
-use App\DTO\PublicationDTO;
+use App\DTO\PublicationRequestDTO;
+use App\DTO\PublicationResponseDTO;
 use App\Entity\Publication;
 
 class PublicationMapper {
 
-    public function publicationToEntity(PublicationDTO $publicationDTO): Publication {
+    public function publicationToEntity(PublicationRequestDTO $publicationDTO): Publication {
         $publication = new Publication();
         $publication->setText($publicationDTO->getText());
         $publication->setPin($publicationDTO->getPin());
@@ -15,11 +16,10 @@ class PublicationMapper {
         return $publication;
     }
 
-    public function publicationToDTO(Publication $publication): PublicationDTO {
-        $publicationDTO = new PublicationDTO();
+    public function publicationToResponseDTO(Publication $publication): PublicationResponseDTO {
+        $publicationDTO = new PublicationResponseDTO();
         $publicationDTO->setText($publication->getText());
         $publicationDTO->setPin($publication->isPin());
-        $publicationDTO->setAuthor($publication->getAuthor());
         return $publicationDTO;
     }
 

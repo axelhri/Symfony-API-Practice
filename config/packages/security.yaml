@@ -15,7 +15,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            pattern: ^/api/v1
+            pattern: ^/api/v1/publication
             stateless: true
             jwt: ~
 

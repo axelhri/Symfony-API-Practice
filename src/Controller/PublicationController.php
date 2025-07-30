@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 
-use App\DTO\PublicationDTO;
+use App\DTO\PublicationRequestDTO;
 use App\Entity\Publication;
 use App\Interface\PublicationServiceInterface;
 use App\Middlewares\SerializerService;
@@ -21,7 +21,7 @@ public function __construct(private SerializerService $serializerService, privat
 
     #[Route('/api/v1/publication', name: 'publication', methods: ['POST'])]
     public function createPublication(Request $request): Response {
-    $publication = $this->serializerService->deserialize(PublicationDTO::class, $request->getContent());
+    $publication = $this->serializerService->deserialize(PublicationRequestDTO::class, $request->getContent());
     $user = $this->security->getUser();
     $this->publicationServiceInterface->createPublication($publication, $user);
     return new JsonResponse(["message" => "Publication created!" , Response::HTTP_CREATED]);

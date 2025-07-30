@@ -3,7 +3,8 @@
 namespace App\Service;
 
 
-use App\DTO\PublicationDTO;
+use App\DTO\PublicationRequestDTO;
+use App\DTO\PublicationResponseDTO;
 use App\Entity\Publication;
 use App\Entity\User;
 use App\Interface\PublicationServiceInterface;
@@ -16,7 +17,7 @@ class PublicationService implements PublicationServiceInterface {
     public function __construct(private PublicationRepository $publicationRepository, private PublicationMapper $publicationMapper) {}
 
     #[\Override]
-    public function createPublication(PublicationDTO $publicationDTO, $user): Publication {
+    public function createPublication(PublicationRequestDTO $publicationDTO, $user): Publication {
         $publication = $this->publicationMapper->publicationToEntity($publicationDTO);
         $publication->setAuthor($user);
         $this->publicationRepository->save($publication);
@@ -24,8 +25,8 @@ class PublicationService implements PublicationServiceInterface {
     }
 
     #[\Override]
-    public function getPublication(Uuid $publicationId): PublicationDTO {
+    public function getPublication(Uuid $publicationId): PublicationResponseDTO {
         $publication = $this->publicationRepository->find($publicationId);
-        return $this->publicationMapper->publicationToDTO($publication);
+        return $this->publicationMapper->publicationToResponseDTO($publication);
     }
 }
